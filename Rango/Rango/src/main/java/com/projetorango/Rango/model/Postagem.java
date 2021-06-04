@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -18,17 +20,21 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "tb_postagem")
 public class Postagem {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id   
+	@GeneratedValue(strategy = GenerationType.IDENTITY)  // VALOR QUE VAI SER GERADO COMO CHAVE ESTRANGEIRA DA CHAVE ID
 	private long id;
 	
-	@NotNull
+	@NotNull  // NÃO PODE SER VAZIO 
+	@Size(min = 5, max = 100)  // MINIMO DE CARACTER E MAXIMO
 	private String titulo;
+	
 	@NotNull
-	private String post;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Size(min = 10, max = 500)
+	private String texto;
+	
+	@Temporal(TemporalType.TIMESTAMP)  // TEMPORAL DETERMINA A HORA QUE A POSTAGEM PASSOU EXATAMENTE 
 	private Date data = new java.sql.Date(System.currentTimeMillis());
-
+	
 	@ManyToOne
 	@JsonIgnoreProperties("postagem")
 	private Tema tema;
@@ -53,14 +59,6 @@ public class Postagem {
 		this.titulo = titulo;
 	}
 
-	public String getPost() {
-		return post;
-	}
-
-	public void setPost(String post) {
-		this.post = post;
-	}
-
 	public Date getData() {
 		return data;
 	}
@@ -83,6 +81,14 @@ public class Postagem {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getTexto() {
+		return texto;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}
 	
 	
